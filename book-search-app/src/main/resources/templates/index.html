@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html xmlns="http://www.thymeleaf.org">
+<head>
+<meta charset="ISO-8859-1">
+<title>BookHub</title>
+<link
+	href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+	rel="stylesheet">
+<script
+	src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</head>
+<style>
+img {
+	max-width: 100%;
+	height: 120px;
+}
+
+.item {
+	width: 120px;
+	min-height: 120px;
+	max-height: auto;
+	float: left;
+	margin: 3px;
+	padding: 3px;
+}
+</style>
+<body>
+	<br />
+	<br />
+	<br />
+	<div class="container d-flex align-items-center justify-content-center">
+
+		<div class="row justify-content-center col-md-10">
+			<div class="card">
+				<div class="col-md-8 offset-2 justify-content-center">
+					<h1>Welcome to BookHub</h1>
+					<br />
+					<h6>A reader lives a thousand lives before he dies . . . The
+						man who never reads lives only one. - George R.R. Martin</h6>
+					<br>
+					<h6>Find another book to read!</h6>
+					<br />
+					<form th:action="@{/books}" method="get">
+						<div class="input-group mb-3 col-sm-3">
+							<input type="text" class="form-control"
+								placeholder="Enter book name" th:name="query" id="query"></input>
+							<button class="btn btn-success" type="submit">Search</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<br />
+	</div>
+	<br />
+	<br />
+	<div class="container d-flex align-items-center justify-content-center"
+		th:if="${not #lists.isEmpty(books)}">
+		<div class="row">
+
+			<div class="col-sm-4" th:each="book : ${books}">
+				<div class="card" style="margin-bottom: 20px;">
+					<div class="card-body">
+						<div class="item">
+							<img th:src="@{${book.coverUrl}}" />
+						</div>
+						<h5 class="card-title" th:text="${book.title}">Special title
+							treatment</h5>
+						<p class="card-text" th:text="${book.author}">With
+							supporting text below as a natural lead-in to additional content.</p>
+
+						<a th:href="@{/viewBook(key=${book.key})}" class="btn btn-primary">View
+							Book</a>
+
+
+					</div>
+				</div>
+			</div>
+		</div>
+		<br />
+	</div>
+	<nav class="container d-flex align-items-center justify-content-center"
+		aria-label="Page navigation example"
+		th:if="${not #lists.isEmpty(books)}">
+		<ul class="pagination">
+			<li class="page-item"><a class="page-link"
+				th:href="@{/books(query=${query},pageNo=1)}">1</a></li>
+			<li class="page-item"><a class="page-link"
+				th:href="@{/books(query=${query},pageNo=2)}">2</a></li>
+			<li class="page-item"><a class="page-link"
+				th:href="@{/books(query=${query},pageNo=3)}">3</a></li>
+			<li class="page-item"><a class="page-link"
+				th:href="@{/books(query=${query},pageNo=4)}">4</a></li>
+			<li class="page-item"><a class="page-link"
+				th:href="@{/books(query=${query},pageNo=5)}">5</a></li>
+		</ul>
+	</nav>
+	<br />
+	<br />
+</body>
+</html>
